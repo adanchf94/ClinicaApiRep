@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ClinicaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Citas">
+          <Key>
+            <PropertyRef Name="IdCita" />
+          </Key>
+          <Property Name="IdCita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="Estado" Type="bit" />
+          <Property Name="IdEspecialidad" Type="varchar" MaxLength="50" />
+          <Property Name="Identificacion" Type="int" />
+        </EntityType>
+        <EntityType Name="Especialidad">
+          <Key>
+            <PropertyRef Name="IdEspecialidad" />
+          </Key>
+          <Property Name="IdEspecialidad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="Identificacion" />
+          </Key>
+          <Property Name="Identificacion" Type="int" Nullable="false" />
+          <Property Name="PrimerNombre" Type="varchar" MaxLength="100" />
+          <Property Name="SegundoNombre" Type="varchar" MaxLength="100" />
+          <Property Name="PrimerApellido" Type="varchar" MaxLength="100" />
+          <Property Name="SegundoApellido" Type="varchar" MaxLength="100" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Citas_Especialidad">
+          <End Role="Especialidad" Type="Self.Especialidad" Multiplicity="0..1" />
+          <End Role="Citas" Type="Self.Citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidad">
+              <PropertyRef Name="IdEspecialidad" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="IdEspecialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Citas_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
+          <End Role="Citas" Type="Self.Citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Identificacion" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="Identificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicaDBModelStoreContainer">
+          <EntitySet Name="Citas" EntityType="Self.Citas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especialidad" EntityType="Self.Especialidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Citas_Especialidad" Association="Self.FK_Citas_Especialidad">
+            <End Role="Especialidad" EntitySet="Especialidad" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Citas_Paciente" Association="Self.FK_Citas_Paciente">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClinicaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="IdCita" />
+          </Key>
+          <Property Name="IdCita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="Boolean" />
+          <Property Name="IdEspecialidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Identificacion" Type="Int32" />
+          <NavigationProperty Name="Especialidad" Relationship="Self.FK_Citas_Especialidad" FromRole="Citas" ToRole="Especialidad" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK_Citas_Paciente" FromRole="Citas" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="Especialidad">
+          <Key>
+            <PropertyRef Name="IdEspecialidad" />
+          </Key>
+          <Property Name="IdEspecialidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK_Citas_Especialidad" FromRole="Especialidad" ToRole="Citas" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="Identificacion" />
+          </Key>
+          <Property Name="Identificacion" Type="Int32" Nullable="false" />
+          <Property Name="PrimerNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SegundoNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PrimerApellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SegundoApellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Estado" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Citas_Especialidad">
+          <End Role="Especialidad" Type="Self.Especialidad" Multiplicity="0..1" />
+          <End Role="Citas" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidad">
+              <PropertyRef Name="IdEspecialidad" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="IdEspecialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Citas_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
+          <End Role="Citas" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Identificacion" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="Identificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicaDBEntitiesConn" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Citas" EntityType="Self.Cita" />
+          <EntitySet Name="Especialidads" EntityType="Self.Especialidad" />
+          <EntitySet Name="Pacientes" EntityType="Self.Paciente" />
+          <AssociationSet Name="FK_Citas_Especialidad" Association="Self.FK_Citas_Especialidad">
+            <End Role="Especialidad" EntitySet="Especialidads" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Citas_Paciente" Association="Self.FK_Citas_Paciente">
+            <End Role="Paciente" EntitySet="Pacientes" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClinicaDBModelStoreContainer" CdmEntityContainer="ClinicaDBEntitiesConn">
+          <EntitySetMapping Name="Citas">
+            <EntityTypeMapping TypeName="ClinicaDBModel.Cita">
+              <MappingFragment StoreEntitySet="Citas">
+                <ScalarProperty Name="IdCita" ColumnName="IdCita" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEspecialidad" ColumnName="IdEspecialidad" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especialidads">
+            <EntityTypeMapping TypeName="ClinicaDBModel.Especialidad">
+              <MappingFragment StoreEntitySet="Especialidad">
+                <ScalarProperty Name="IdEspecialidad" ColumnName="IdEspecialidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pacientes">
+            <EntityTypeMapping TypeName="ClinicaDBModel.Paciente">
+              <MappingFragment StoreEntitySet="Paciente">
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
