@@ -87,8 +87,6 @@
           <Property Name="Estado" Type="Boolean" />
           <Property Name="IdEspecialidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Identificacion" Type="Int32" />
-          <NavigationProperty Name="Especialidad" Relationship="Self.FK_Citas_Especialidad" FromRole="Citas" ToRole="Especialidad" />
-          <NavigationProperty Name="Paciente" Relationship="Self.FK_Citas_Paciente" FromRole="Citas" ToRole="Paciente" />
         </EntityType>
         <EntityType Name="Especialidad">
           <Key>
@@ -96,7 +94,6 @@
           </Key>
           <Property Name="IdEspecialidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Citas" Relationship="Self.FK_Citas_Especialidad" FromRole="Especialidad" ToRole="Citas" />
         </EntityType>
         <EntityType Name="Paciente">
           <Key>

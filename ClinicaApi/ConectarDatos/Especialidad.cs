@@ -14,16 +14,7 @@ namespace ConectarDatos
     
     public partial class Especialidad
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Especialidad()
-        {
-            this.Citas = new HashSet<Cita>();
-        }
-    
         public string IdEspecialidad { get; set; }
         public string Nombre { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Citas { get; set; }
     }
 }

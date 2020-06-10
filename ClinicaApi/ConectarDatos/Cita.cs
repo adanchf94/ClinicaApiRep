@@ -19,8 +19,5 @@ namespace ConectarDatos
         public Nullable<bool> Estado { get; set; }
         public string IdEspecialidad { get; set; }
         public Nullable<int> Identificacion { get; set; }
-    
-        public virtual Especialidad Especialidad { get; set; }
-        public virtual Paciente Paciente { get; set; }
     }
 }
